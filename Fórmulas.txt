@@ -1,0 +1,15 @@
+Inodo
+
+Vars:
+Tamaño disco = T 
+Tamaño bloque = B
+Tamaño apuntador de bloque = A
+Núm bloques en disco = #b
+Num apuntadores directos = #d
+Num apuntadores indirectos = #i
+Num apuntadores dobles indirectos = #ii
+Num apuntadores triples indirectos = #iii
+
+
+Fórmulas:
+T / B = #b
