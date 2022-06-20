@@ -1,0 +1,97 @@
+256 segmentos = 2 ^ 8 segmentos --> 8 bits direccionar tabla de segmentos
+26 bits direccion logica - 8 bits direccionar segmentos = 18 bits para el offset
+
+// 24 bits direccion fisica - 18 bits length = 6 bits tabla segmentos
+
+
+
+tabla segmentos
+num segmentos  | @ base (STBR)  | limite (STLR)
+0                  24 bits          18 bits
+1
+2
+...
+255
+
+2 ^ 8 segmentos maximos (24 + 18) bits = 10.752 bits
+2 ^ 18 B = 256 KB medida segmentos
+
+254321 % 262144 = 19 Byte offset
+262144 -254321
+
+
+254321 / 2 ^ 18 = 0.97
+254321 - 200000 = 54321
+
+254321 - 1 * 2 ^ 18 =
+
+0b 0110 1010 / 0b0000 1000 = 0110
+
+segmento 1, direccion 350000 - 325000 @base = 25000 offset
+
+26 direccion virtual = 8 bits segmento + 18 bits offset
+1 * 2 ^ 18 + 25000 =
+
+350000 direccion fisica --> segmento 1, 25000
+direccion virtual 26 bits
+0b0000 0001 0000 0000 0000 0000 00 + 25000
+1 * 2 ^ 18 + 25000
+
+
+10000 / 2 ^ 13 = 1.22...
+(1.22... - 1) * 2 ^ 13 = 1808
+500 * 2 ^ 13 + 1808 = 4097808
+
+
+2457603 - 300 * 2 ^ 13  = 2457603 - 2457600 = 3
+
+2457600 <= 2457603 < 2457600 + 2 ^ 13 OK
+
+
+direcion virtual 0 * 2 ^ 13 + 3
+
+
+
+300 * 2 ^ 13
+
+2 ^ 12 Btytes bloc de dades / 2 ^ 2 Bytes apuntador = 2 ^ 10 apuntadors / bloc
+2 ^ 12 Bytes * 3 directes +
++ 2 bloc indirectre * 2 ^ 10 blocs indirectes * 2 ^ 12 Bytes +
++ 1 bloc doble indirecte * ( 2 ^ 10 ) ^ 2  * 2 ^ 12 Bytes = 4.303.368.192
+
+64 Kbits fisica
+32 bits adreça logica
+pagina 4096 B
+
+4096 B = 2 ^ 12 B --> 12 bits para direccoinar pagina
+32 bits direccion logica - 12 bits offset = 20 direccionar pagina
+
+64 Kbits = 2 ^ 16 bits * (1 B / 8 bits) = 2 ^ 13 Bytes de memoria fisica --> direcciones fisica 13 bits
+
+direccion fisica 13 bits = 12 offset + 1 bit de frame
+
+2 ^ 20 =
+
+128 segments logics
+22 bits adreça logica
+20 adreça fisica
+adreça fisica de logica 65636
+
+128 = 2 ^ 7 segments --> 7 bits direccionar szegment a adreça logica
+22 bits adreça logica - 7 bits pel segment = 15 bits indireccio dins el segment
+65636 / 2 ^ 15 = 2.00...
+direccio fisica base 4000
+(2.00... - 2) * 2 ^ 15 = 100 offset
+
+4000 + 100
+
+
+
+
+
+
+
+
+
+
+
