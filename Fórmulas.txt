@@ -1,6 +1,5 @@
+Sistema de archivos
 
-
-Vars:
 Tamaño disco = T 
 Tamaño bloque = B
 Tamaño apuntador de bloque = A
@@ -26,5 +25,45 @@ A = log2(#b) = logn(#b) / logn(2)  // última expresión para calculadora
 #a = B / A
 Fi = #d * B + #p * #a * B + #pp * #a ^ 2 * B + #ppp * #a ^ 3 * B
 Ti = #i * (#d + #p + #pp + #ppp) * A
+
+
+
+Memoria
+General
+Tamaño total memoria física = F
+Tamaño total memoria virtual = V
+Num bits direcciones memoria virtual = #v
+Num bits direcciones memoria física = #f
+Num bits desplazamiento = #o
+Num bits para direccionar un segmento o pagina = #b
+Num de segmentos o paginas máximos = #B
+Num bits para funcionalidades extra por página o segmento = #n
+Tamaño de segmento o pagina (máximo) = B
+
+Formulas
+#f = log2(F) = logn(F) / logn(2) --> 2 ^ #f = F
+F = 2 ^ #f
+V = 2 ^ #v
+#v = #b + #o
+#B = 2 ^ #b --> #b = log2(#B)
+B = 2 ^ #o --> ...
+
+Segmentos
+Tamaño maximo tabla de segmentos = S 
+Tamaño del espacio maximo assignable a un proceso = SMmax
+
+Formulas
+S = #B * (#f + #o + #n)
+SMmax = B * #B
+
+Páginas
+Tamaño tabla de paginas = P
+Tamaño del espacio maximo asignable a un proceso = PMmax
+Num bits guardados en cada celda de la tabla de paginas = #Pp
+
+Formulas
+#Pp = #f - #o
+P = #B * (#Pp + #n)
+PMmax = B * #B
 
 
