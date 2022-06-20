@@ -1,0 +1,71 @@
+1)
+1 GB (2 ^ 30 B / 1 GB) = 2 ^ 30 B --> 30 bits direccionar mem fisica
+1 TB = 2 ^ 40 B
+
+
+
+
+RAM
+
+     0   5   10  15  20  25  30  35  40  45  50  55  60  65  70
+000 SO       SO      SO          SO      SO
+100 SO       SO      SO          SO      SO
+200 P1       P1      P1          P1      P1
+300 P1       P1      P1          P1      P1
+400          P2      P2
+500          P3      P3          P3      P3
+600          P3      P3          P3      P3
+700          P3      P3          P3      P3
+800                  P4          P4
+900
+
+124 MB
+100 MB
+(124)
+
+1024 B  = 1 bloque
+1024 B = 700 B
+
+Gantt
+
+     0   5   10  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90
+P1  c1--ESxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-------f
+P2          c1------ESxxxxxx-----f
+P3          cxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx------------xxxxxxxx----------f
+P4                  c-------ESxxxx-------f
+
+
+Blocked <-- Run <-- Ready ()
+
+
+T mig retorn = (55 + 25 + 80 + 25) / 4 = 46.25 ns
+
+b) T uso / T total = 15 / 90 = 83,33 % tiempo uso CPU
+
+fragmentacion interna: espacios vacios que quedan dentro de una misma pagina  -> no se puede solucionar
+fragemtnacion externa: espacios no continguos entre diferentes paginas (mas fragmentos, menos memoria efectiva)
+
+
+
+1
+
+     00  01  02  03  04  05  06  07  08  09  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  35  36  37  38
+P1   c----xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx------------|--ESxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx--------f
+P2       c--------xxxxxxxxxxxxxxxxxxxx-------ESxxxxxxxxxxxxxxxxxxx------------f
+P3            cxxxxxxxxxxx-----------ESxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-----------|---f
+P4                c1-----ESxxxxxxxxxxxxxxxxxxx-----------|-------f
+
+(38 + 17 + 20 + 12) / 4 = 21.75 t temps de retorn mig
+
+21 + 5 + (3) + 0 = 29 / 4 = 7.25 t temps d'espera mig
+
+
+% ocios = 10 / 38
+
+73,68 % ús CPU
+
+
+
+
+
+

@@ -1,0 +1,254 @@
+1)
+Tabla de paginas {8}
+2 ^ 3 = 8
+log2(8) = 3
+
+000
+001
+010
+011
+100
+101
+110
+111
+
+8 bit = 1 B
+1 KB = 2 ^ 10 B
+1 KB * (2 ^ 10 B / 1 KB) = 2 ^ 10 B
+
+Direcciones virtuales:
+3 bits altos direccion pagina + 10 bits Offset
+
+1 frame = 1 pagina
+32 frames * (2 ^ 10 B / 1 frame) = 2 ^ 15 (drieccion fisica)
+direccion fisica:
+? bits + 10 bits offset = 15 bits
+5 bits
+
+pagines[8]
+pagines ocupa 5 bits
+8 * (5 bits + 1 bit) = 48 bits
+
+
+2) 32 KB * (2 ^ 10 B / 1 KB) = 2 ^ 15 B --> 15 bits
+8 segmentos
+log2 (8) = 3 bits direccionar tabla de segmentos
+
+
+Tabla de segmentos
+@base (15 bits), offset (15 bits), dirty (1 bit)
+32 KB
+0, 2 ^ 32
+
+
+direcciones virtuales
+3 bits tabla segmentos + 15 bits offset
+
+0b001 6000
+@base (15 bits), offset (15 bits), dirty (1 bit)
+1000, 3005, 0
+
+direccion fisica: 1000 + 6000 < 1000 + 3005
+SIG FAULT
+
+8 * (15 bits + 15 bits + 1) = 248 bits;
+248 bits * (1 B / 8 bit) =~ 31 B
+
+3)
+a) 0 * 2 ^ mida_segment + 430
+
+219 + 430 = 649 direccion fisica
+430 < 600 OK
+
+[219, 600] XXXX
+posiciones mem fisica validas: [219 + 0, 219 + 600)
+posiciones mem virtual validas: [0:0, 0:600)
+
+
+b) 1:10
+10 < 14 OK
+2300 + 10 = 2310 mem fisica
+
+c) 1:11
+11 < 14 OK
+2300 + 11 = 2311
+
+d) 500 < 100 --> SIG FAULT
+
+e) 3:400
+400 < 580
+1327 + 400 = 1727
+
+f) 4:112
+112 < 96 --> SIG FAULT
+
+
+4)
+512 B = 2 ^ 9 B --> 9 bits offset
+3 bits direcciones tabla de paginas
+tabla de paginas 5 --> 8 3 bits
+
+5
+0: 000
+1: 001
+2: 010
+3: 011
+4: 100
+5: -101
+6: -110
+7: -111
+
+dir viertuales: 3 bits + 9 bits = 12 bits
+a) 2478
+2478 / 2 ^ 9 =~ 4.8976786 --> pagina 4
+2478 % 2 ^ 9 = 430 --> offset
+
+0b110 * 512 B + 430 B = 6 * 512 + 430 = 3502
+
+b) 10
+10 / 512 =~ 0.23346783465
+10 % 512 = 10
+
+4 * 512 + 10 = 2058
+
+c) 11
+2059
+
+d) 4084
+4084 / 512 ~= 7
+4084 % 512 = 500
+No hay info
+
+e) 1424
+1424 / 512 =~ 2
+1424 % 512 = 400
+7 * 512 + 400 = 3984
+
+5) a) 50 ns cargar tabla de paginas + 50 ns cargqar memoria en si
+b) 0.75 (0 + 50) + 0.25 (50 + 50) = 37.5 + 25 = 62.5 ns
+
+6) a) 85 % HIT
+T = 0.85 * (0 + 60) + 0.15 * (60 + 60) = 69 ns
+b ) 50 % HIT
+T = 0.50 * (0 + 60) + 0.5 * (120) = 90 ns
+
+
+7)
+10 KB, 4 KB, 20 KB, 18 KB, 7 KB, 9 KB, 12 KB, 15 KB
+Nos llega peticion de 12 KB, 10 KB, 9 KB
+a) First fit: Da el rpimer hueco encontrado empezando por el principio
+
+12 KB se alocan en el trozo de 20 KB y queda segmento de 8 KB
+10 KB se alocan en el trozo de 10 KB (el del principio)
+9 KB se alocan en el trozo de 18 KB quedando 9 KB libres
+
+for (int i = 0; i < segmento; i++)
+{
+si segmento.medida <= allocation.medida
+  devuelve i;
+}
+
+b) Next fit: dar el siguiente trozo posible despues del ultimo del ultimo trozo dado.
+
+static int i = 0;
+for (; i < segmento; i++)
+{
+si segmento.medida <= allocation.medida
+  devuelve i;
+}
+
+12 KB se alocan en el trozo de 20 KB y queda segmento de 8 KB
+10 KB se alocan en el de 18 dejando agujero de 8 KB
+9 KB se alocan en el de 9 KB
+
+c) Best fit
+segmento best_segment;
+for (int i = 0; i < num_segmentos; i++)
+{
+  si segmento.medida <= allocation.medida
+  {
+    si (segmento.medid < best_segment)
+    {
+      best_segment = segmento;
+    }
+  }
+}
+
+12 KB se alocan en 12 KB
+10 KB se alocan en 10 KB
+9 KB en 9 KB
+
+d) Worst fit
+segmento best_segment;
+for (int i = 0; i < num_segmentos; i++)
+{
+  si segmento.medida <= allocation.medida
+  {
+    si (segmento.medid > best_segment)
+    {
+      best_segment = segmento;
+    }
+  }
+}
+
+12 KB se alocan en 20
+10 KB se alocan en 18 KB
+9 KB en 15 KB
+
+
+8)
+10, 11, 104, 170, 73, 309, 185, 245, 246, 434, 458, 364
+
+460 paraules = 460 word =
+1 word = 4 Bytes = 32 bits
+1 word = 1 Byte
+
+
+
+
+10 / 100 ~= 0
+11 / 100 ~= 0
+104 1
+170 1
+73 0
+309 3
+185 1
+245 2
+246 2
+434 4
+458 4
+364 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
